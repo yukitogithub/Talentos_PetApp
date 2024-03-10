@@ -34,6 +34,13 @@ builder.Services.AddIdentityCore<User>(options =>
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+//Transient: A new instance is created every time the service is requested.
+//builder.Services.AddTransient<IPetService, PetService>();
+//Scoped: A new instance is created once per request, and is shared within a request, taking into account "THE SCOPED"
+builder.Services.AddScoped<IPetService, PetService>();
+//Singleton: A new instance is created the first time the service is requested, and the same instance is used for all subsequent requests.
+//builder.Services.AddSingleton<IPetService, PetService>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
