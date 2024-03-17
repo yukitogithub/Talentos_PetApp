@@ -1,10 +1,12 @@
 ﻿using BusinessAccessLayer.Dto;
 using BusinessAccessLayer.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PresentationLayer.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PetsController : ControllerBase
@@ -32,22 +34,43 @@ namespace PresentationLayer.Controllers
         [HttpPost("AddPet")]
         public async Task<ActionResult> AddPet(PetDto pet)
         {
-            await _petService.AddPet(pet);
-            return Ok();
+            try
+            {
+                await _petService.AddPet(pet);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut("UpdatePet/{petId}")]
         public async Task<ActionResult> UpdatePet(PetDto pet, int petId)
         {
-            await _petService.UpdatePet(pet, petId);
-            return Ok();
+            try
+            {
+                await _petService.UpdatePet(pet, petId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("DeletePet/{petId}")]
         public async Task<ActionResult> DeletePet(int petId)
         {
-            await _petService.DeletePet(petId);
-            return Ok();
+            try
+            {
+                await _petService.DeletePet(petId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

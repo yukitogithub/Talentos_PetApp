@@ -8,7 +8,7 @@ namespace BusinessAccessLayer.Dto
 {
     public class PetDto
     {
-        //public int Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Type { get; set; }

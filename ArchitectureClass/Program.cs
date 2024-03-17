@@ -7,6 +7,9 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using BusinessAccessLayer.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using PresentationLayer.Infrastucture.AutoMapper;
+using System.Reflection;
+using PresentationLayer.Infrastucture.Services;
 
 //Builder
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +24,7 @@ builder.Services.AddIdentityCore<User>(options =>
         //options.Password.RequireDigit = false;
         //options.Password.RequireLowercase = false;
         //options.Password.RequireUppercase = false;
-        //options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireNonAlphanumeric = false;
         //options.Password.RequiredLength = 6;
         options.SignIn.RequireConfirmedEmail = false;
     })
@@ -40,6 +43,9 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPetService, PetService>();
 //Singleton: A new instance is created the first time the service is requested, and the same instance is used for all subsequent requests.
 //builder.Services.AddSingleton<IPetService, PetService>();
+
+builder.Services.AddTransient<ICurrentUserService, CurrentUserService>();
+builder.Services.AddAutoMapper(new Assembly[] { typeof(AutoMapperProfile).Assembly });
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -132,6 +138,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//CORS
+app.UseCors(x => x
+    .AllowAnyHeader()
+    .AllowAnyMethod() //POST GET PUT
+    //.WithOrigins("https://www.pets.com.ar")
+    //.AllowAnyOrigin()
+    .SetIsOriginAllowed(origin => true)
+    .AllowCredentials()
+);
 
 app.UseHttpsRedirection();
 
