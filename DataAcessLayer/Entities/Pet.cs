@@ -15,6 +15,7 @@ namespace DataAccessLayer.Entities
         public string Type { get; set; }
         public DateTime Birthday { get; set; }
         public string Breed { get; set; }
+        public string ImageUrl { get; set; }
 
         //[ForeignKey("User")]
         public int? UserId { get; set; }
