@@ -12,8 +12,9 @@ namespace BusinessAccessLayer.Services
     {
         Task AddPet(PetDto petDto);
         Task<PetDto> GetPet(int petId);
-        Task<List<PetDto>> GetPets();
+        Task<List<PetDto>> GetPets(FilterDto filter); //Trae todas las mascotas
         Task UpdatePet(PetDto petDto, int petId);
         Task DeletePet(int petId);
+        Task<List<PetDto>> GetMyPets();
     }
 }

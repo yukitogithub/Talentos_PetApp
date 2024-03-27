@@ -12,10 +12,11 @@ namespace DataAccessLayer.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Type { get; set; }
+        public string Type { get; set; } //Dog Cat Perro Gato
         public DateTime Birthday { get; set; }
         public string Breed { get; set; }
         public string ImageUrl { get; set; }
+        public string Sex { get; set; } //F or M Female Male Macho Hembra
 
         //[ForeignKey("User")]
         public int? UserId { get; set; }

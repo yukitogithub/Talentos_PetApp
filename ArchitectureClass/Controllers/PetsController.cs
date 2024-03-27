@@ -19,16 +19,31 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpGet("GetPets")]
-        public async Task<ActionResult> GetPets()
+        public async Task<ActionResult> GetPets([FromQuery] FilterDto filter)
         {
             try
             {
-                var pets = await _petService.GetPets();
+                var pets = await _petService.GetPets(filter);
                 return Ok(pets);
             }
             catch (Exception ex)
             {
                 //var message = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return BadRequest(ex.Message);
+            }
+        }
+
+        //Get My Pets - Endpoint que devuelve las mascotas del usuario logueado
+        [HttpGet("GetMyPets")]
+        public async Task<ActionResult> GetMyPets()
+        {
+            try
+            {
+                var pets = await _petService.GetMyPets();
+                return Ok(pets);
+            }
+            catch (Exception ex)
+            {
                 return BadRequest(ex.Message);
             }
         }

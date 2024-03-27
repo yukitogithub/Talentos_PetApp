@@ -15,6 +15,7 @@ namespace BusinessAccessLayer.Dto
         public DateTime Birthday { get; set; }
         public string Breed { get; set; }
         public string ImageUrl { get; set; }
+        public string Sex { get; set; }
         public int? UserId { get; set; }
     }
 }

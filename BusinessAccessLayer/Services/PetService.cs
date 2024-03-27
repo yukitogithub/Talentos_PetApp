@@ -134,11 +134,24 @@ namespace BusinessAccessLayer.Services
             }
         }
 
-        public async Task<List<PetDto>> GetPets()
+        public async Task<List<PetDto>> GetPets(FilterDto filter)
         {
             try
             {
-                var pets = await _db.Pets.ToListAsync();
+                var pets = await _db.Pets
+                    .Where(p => 
+                        ( string.IsNullOrEmpty(filter.Type) || (p.Type == filter.Type) )
+                        &&
+                        ( string.IsNullOrEmpty(filter.Breed) || (p.Breed == filter.Breed) )
+                        &&
+                        ( string.IsNullOrEmpty(filter.Sex) || (p.Sex == filter.Sex) )
+                    )
+                    //AddPagination
+                    //ej: 1 2 Pagina 3
+                    //ej: PageSize: 15
+                    .Skip((filter.Page - 1) * filter.PageSize)
+                    .Take(filter.PageSize)
+                    .ToListAsync();
 
                 var petDtos = new List<PetDto>();
 
@@ -155,6 +168,35 @@ namespace BusinessAccessLayer.Services
                 //    };
                 //    petDtos.Add(petDto);
                 //}
+
+                petDtos = _mapper.Map<List<PetDto>>(pets);
+
+                var serviceResult = new ServiceResult<List<PetDto>>()
+                {
+                    IsSuccess = pets != null,
+                    ErrorMessage = pets == null ? "No pets found" : string.Empty,
+                    Data = petDtos
+                };
+
+                return petDtos;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        //Añadir método GetMyPets que devuelva los pets del usuario logueado
+        public async Task<List<PetDto>> GetMyPets()
+        {
+            var userId = _currentUserService.UserId;
+            if (userId == 0) throw new Exception("User required");
+
+            try
+            {
+                var pets = await _db.Pets.Where(x => x.UserId == userId).ToListAsync();
+
+                var petDtos = new List<PetDto>();
 
                 petDtos = _mapper.Map<List<PetDto>>(pets);
 
