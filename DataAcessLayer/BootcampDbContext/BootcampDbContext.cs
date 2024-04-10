@@ -27,13 +27,25 @@ namespace DataAccessLayer.BootcampDbContext
             
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
         //    modelBuilder.Entity<User>()
         //        .HasMany(u => u.Pets)
         //        .WithOne(p => p.User)
         //        .HasForeignKey(p => p.UserId);
-        //}
+            base.OnModelCreating(modelBuilder);
+            modelBuilder
+                .Entity<Pet>()
+                .Property(p => p.Type)
+                .HasConversion<string>();
+            modelBuilder
+                .Entity<Pet>()
+                .Property(p => p.Sex)
+                .HasConversion<string>();
+            //modelBuilder.Entity<Pet>()
+            //    .Property(p => p.Breed)
+            //    .HasConversion<string>();
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
             //optionBuilder.UseSqlServer("Data Source=LAPTOP-GTCNNS43\\SQL2019;Initial Catalog=BootcampDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");

@@ -38,7 +38,7 @@ namespace BusinessAccessLayer.Services
                 Name = petDto.Name,
                 Description = petDto.Description,
                 Birthday = petDto.Birthday,
-                Type = petDto.Type,
+                Type = Enum.Parse<PetType>(petDto.Type, false),
                 Breed = petDto.Breed,
                 UserId = userId,
                 ImageUrl = petDto.ImageUrl
@@ -66,7 +66,7 @@ namespace BusinessAccessLayer.Services
                 pet.Name = petDto.Name;
                 pet.Description = petDto.Description;
                 pet.Birthday = petDto.Birthday;
-                pet.Type = petDto.Type;
+                pet.Type = Enum.Parse<PetType>(petDto.Type, false);
                 pet.Breed = petDto.Breed;
 
                 _db.Pets.Update(pet);
@@ -112,8 +112,8 @@ namespace BusinessAccessLayer.Services
                         Name = pet.Name,
                         Description = pet.Description,
                         Birthday = pet.Birthday,
-                        Type = pet.Type,
-                        Breed = pet.Breed,
+                        Type = pet.Type.ToString(),
+                        Breed = pet.Breed.ToString(),
                         UserId = pet.UserId,
                         ImageUrl = pet.ImageUrl
                     };
@@ -140,11 +140,11 @@ namespace BusinessAccessLayer.Services
             {
                 var pets = await _db.Pets
                     .Where(p => 
-                        ( string.IsNullOrEmpty(filter.Type) || (p.Type == filter.Type) )
+                        ( string.IsNullOrEmpty(filter.Type) || (p.Type.ToString() == filter.Type) )
                         &&
-                        ( string.IsNullOrEmpty(filter.Breed) || (p.Breed == filter.Breed) )
+                        ( string.IsNullOrEmpty(filter.Breed) || (p.Breed.ToString() == filter.Breed) )
                         &&
-                        ( string.IsNullOrEmpty(filter.Sex) || (p.Sex == filter.Sex) )
+                        ( string.IsNullOrEmpty(filter.Sex) || (p.Sex.ToString() == filter.Sex) )
                     )
                     //AddPagination
                     //ej: 1 2 Pagina 3

@@ -113,50 +113,50 @@ using (var scope = app.Services.CreateScope())
     //Add Roles
     try
     {
-        var roleManager = services.GetRequiredService<RoleManager<IdentityRole<int>>>();
-        if (!roleManager.RoleExistsAsync("Admin").Result)
-        {
-            var role = new IdentityRole<int>();
-            role.Name = "Admin";
-            roleManager.CreateAsync(role).Wait();
-        }
-        if (!roleManager.RoleExistsAsync("Owner").Result)
-        {
-            var role = new IdentityRole<int>();
-            role.Name = "Owner";
-            roleManager.CreateAsync(role).Wait();
-        }
+        //var roleManager = services.GetRequiredService<RoleManager<IdentityRole<int>>>();
+        //if (!roleManager.RoleExistsAsync("Admin").Result)
+        //{
+        //    var role = new IdentityRole<int>();
+        //    role.Name = "Admin";
+        //    roleManager.CreateAsync(role).Wait();
+        //}
+        //if (!roleManager.RoleExistsAsync("Owner").Result)
+        //{
+        //    var role = new IdentityRole<int>();
+        //    role.Name = "Owner";
+        //    roleManager.CreateAsync(role).Wait();
+        //}
 
-        if (context.Users.Count() < 100)
-        {
-            var userManager = services.GetRequiredService<UserManager<User>>();
+        //if (context.Users.Count() < 100)
+        //{
+        //    var userManager = services.GetRequiredService<UserManager<User>>();
 
-            string[] names = new string[] { "Carlos", "Juan", "Pedro", "Ana", "Maria", "Jose", "Luis", "Miguel", "Carmen", "Isabel", "Antonio", "Francisco", "Manuel", "Javier", "David", "Daniel", "Rafael", "Fernando", "Pablo", "Sergio", "Andres", "Jorge", "Alberto", "Ricardo", "Eduardo", "Diego", "Roberto", "Alfredo", "Gabriel", "Guillermo", "Enrique", "Ramiro", "Martin", "Hector", "Gustavo", "Ignacio", "Rodrigo", "Felipe", "Raul", "Arturo", "Mario", "Lorenzo", "Julio", "Victor", "Ruben", "Adrian", "Angel", "Oscar", "Emilio", "Alejandro" };
-            string[] lastNames = new string[] { "Gomez", "Lopez", "Diaz", "Martinez", "Gonzalez", "Perez", "Rodriguez", "Sanchez", "Ramirez", "Torres", "Flores", "Vargas", "Castillo", "Morales", "Gutierrez", "Guerrero", "Mendoza", "Ruiz", "Alvarez", "Delgado", "Paredes", "Cordero", "Santos", "Reyes", "Rojas", "Rivera", "Duarte", "Aguilar", "Vega", "Rios", "Fuentes", "Carrasco", "Caballero", "Navarro", "Soto", "Barrios", "Parra", "Valencia", "Mendez", "Zamora", "Nunez", "Cabrera", "Campos", "Vasquez", "Escobar", "Romero", "Salazar", "Peña", "Arias", "Cruz", "Bravo" };
+        //    string[] names = new string[] { "Carlos", "Juan", "Pedro", "Ana", "Maria", "Jose", "Luis", "Miguel", "Carmen", "Isabel", "Antonio", "Francisco", "Manuel", "Javier", "David", "Daniel", "Rafael", "Fernando", "Pablo", "Sergio", "Andres", "Jorge", "Alberto", "Ricardo", "Eduardo", "Diego", "Roberto", "Alfredo", "Gabriel", "Guillermo", "Enrique", "Ramiro", "Martin", "Hector", "Gustavo", "Ignacio", "Rodrigo", "Felipe", "Raul", "Arturo", "Mario", "Lorenzo", "Julio", "Victor", "Ruben", "Adrian", "Angel", "Oscar", "Emilio", "Alejandro" };
+        //    string[] lastNames = new string[] { "Gomez", "Lopez", "Diaz", "Martinez", "Gonzalez", "Perez", "Rodriguez", "Sanchez", "Ramirez", "Torres", "Flores", "Vargas", "Castillo", "Morales", "Gutierrez", "Guerrero", "Mendoza", "Ruiz", "Alvarez", "Delgado", "Paredes", "Cordero", "Santos", "Reyes", "Rojas", "Rivera", "Duarte", "Aguilar", "Vega", "Rios", "Fuentes", "Carrasco", "Caballero", "Navarro", "Soto", "Barrios", "Parra", "Valencia", "Mendez", "Zamora", "Nunez", "Cabrera", "Campos", "Vasquez", "Escobar", "Romero", "Salazar", "Peña", "Arias", "Cruz", "Bravo" };
 
-            for (int i = 1; i < 100; i++)
-            {
-                Random random = new Random();
-                var name = names[random.Next(names.Length)];
-                var lastName = lastNames[random.Next(lastNames.Length)];
-                var email = $"{name.ToLower()}.{lastName.ToLower()}@email.com";
+        //    for (int i = 1; i < 100; i++)
+        //    {
+        //        Random random = new Random();
+        //        var name = names[random.Next(names.Length)];
+        //        var lastName = lastNames[random.Next(lastNames.Length)];
+        //        var email = $"{name.ToLower()}.{lastName.ToLower()}@email.com";
 
-                var user = new User
-                {
-                    Name = name,
-                    LastName = lastName,
-                    Email = email,
-                    UserName = email,
-                    Birthday = DateTime.Now
-                };
-                
-                if(!userManager.Users.Any(x => x.UserName.ToLower() == email.ToLower())) 
-                {
-                    await userManager.CreateAsync(user, "Asdf1234.");
-                    await userManager.AddToRoleAsync(user, "Owner");
-                }
-            }
-        }
+        //        var user = new User
+        //        {
+        //            Name = name,
+        //            LastName = lastName,
+        //            Email = email,
+        //            UserName = email,
+        //            Birthday = DateTime.Now
+        //        };
+
+        //        if(!userManager.Users.Any(x => x.UserName.ToLower() == email.ToLower()))
+        //        {
+        //            await userManager.CreateAsync(user, "Asdf1234.");
+        //            await userManager.AddToRoleAsync(user, "Owner");
+        //        }
+        //    }
+        //}
     }
     catch (Exception ex)
     {
